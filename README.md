@@ -134,3 +134,5 @@ Build an **interactive dashboard** using **Flask + React** to visualize and pres
 - **Statistical Analysis**: Statsmodels  
 - **Bayesian Modeling**: PyMC  
 - **Development Environment**: VS Code, Jupyter Notebooks
+
+## Thank You
