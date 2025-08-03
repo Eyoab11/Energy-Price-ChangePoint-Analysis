@@ -1,0 +1,3 @@
+data:
+  raw_path: 'data/01_raw/brent_prices.csv'
+  events_path: 'data/03_external/key_events.csv'
