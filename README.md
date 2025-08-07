@@ -135,4 +135,36 @@ Build an **interactive dashboard** using **Flask + React** to visualize and pres
 - **Bayesian Modeling**: PyMC  
 - **Development Environment**: VS Code, Jupyter Notebooks
 
-## Thank You
+---
+### Task 2: Bayesian Change Point Modeling - ✅ COMPLETE
+
+This task focused on implementing the core analytical model to statistically validate the hypotheses from Task 1. We used a Bayesian Change Point model built with PyMC to detect shifts in market volatility.
+
+#### Analytical Approach
+
+To manage computational complexity, the analysis was first focused on a well-defined period of high volatility: the **2008 Global Financial Crisis (2007-2009)**.
+
+1.  **Model Definition:** A Bayesian model was constructed to identify a single change point (`tau`) in the stationary log return series. The model assumes that the volatility (`sigma`) of the series changes from a value `sigma_1` to `sigma_2` at time `tau`.
+2.  **Priors:**
+    *   `tau` (Change Point): A `DiscreteUniform` prior, giving every day in the period an equal chance of being the change point.
+    *   `sigma_1`, `sigma_2` (Volatilities): `Exponential` priors to ensure positivity.
+3.  **Inference:** The model was sampled using the NUTS (No-U-Turn Sampler) for continuous parameters and Metropolis for the discrete `tau` parameter. We ran 2 chains with 2000 draws each after a tuning phase of 1000 steps.
+
+#### Key Findings from Task 2
+
+The model successfully identified a significant structural break and quantified its impact with high confidence.
+
+*   **Change Point Identification:** The model pinpointed the most probable change point around **mid-August 2008**. The posterior distribution for `tau` shows a sharp peak, indicating high certainty. This timing is particularly insightful as it precedes the official Lehman Brothers collapse on September 15, 2008, suggesting that market instability was already priced in as the crisis escalated.
+
+    ![Posterior of Tau](reports/task-2/02_tau_posterior_crisis.png)
+
+*   **Quantifying the Impact on Volatility:** The analysis of the posterior distributions for `sigma_1` and `sigma_2` shows a clear and dramatic shift. The two distributions are completely separate, indicating a statistically undeniable change.
+
+    ![Posterior of Sigmas](reports/task-2/03_sigma_posterior_crisis.png)
+
+*   **Business Insight:**
+    *   The model is **100.0% certain** that volatility increased after the change point.
+    *   The mean daily volatility surged from **~0.019** before the break to **~0.036** after.
+    *   This represents a **~92% increase in daily market risk**, providing a quantitative measure of the 2008 crisis's impact on the oil market.
+
+This successful analysis on a focused period validates our methodology. The next logical step is to apply this validated technique to other key periods identified in Task 1 or to build a more advanced model to scan the entire timeline.
