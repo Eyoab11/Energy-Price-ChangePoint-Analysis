@@ -4,3 +4,7 @@ pymc
 arviz
 matplotlib
 seaborn
+streamlit 
+plotly
+Flask 
+Flask-Cors

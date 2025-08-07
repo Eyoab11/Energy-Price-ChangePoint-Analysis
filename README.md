@@ -168,3 +168,82 @@ The model successfully identified a significant structural break and quantified 
     *   This represents a **~92% increase in daily market risk**, providing a quantitative measure of the 2008 crisis's impact on the oil market.
 
 This successful analysis on a focused period validates our methodology. The next logical step is to apply this validated technique to other key periods identified in Task 1 or to build a more advanced model to scan the entire timeline.
+
+---
+
+## 🖥️ Task 3: Interactive Dashboard Development - ✅ COMPLETE
+
+Task 3 focused on translating our analytical findings into an interactive, user-friendly dashboard for stakeholders at Birhan Energies. To deliver value efficiently while also adhering to the project's technical specifications, we adopted a two-phased approach.
+
+### Phase 1: Rapid Prototype with Streamlit
+
+As a first step, a fully functional dashboard was built using **Streamlit** and **Plotly**. This approach enabled rapid development and allowed us to focus on data visualization and user experience without the overhead of a complex web stack.
+
+**Key Features:**
+- **Interactive Time Series Chart:** A dynamic Plotly chart visualizes the Brent oil price history.
+- **Dynamic Filtering:** Users can filter the data by a specific date range and select which major events to highlight on the chart.
+- **Live KPI Metrics:** Key metrics like Average Price and Daily Volatility update in real-time based on the selected filters.
+- **Deployment-Ready:** The entire application is contained in a single Python script (`dashboard.py`) and can be easily deployed to the web.
+
+![Streamlit Dashboard](reports/task-3/streamlit_dashboard.png)
+
+> **Note:** Take a screenshot of your Streamlit app and save it as `streamlit_dashboard.png` in a new folder `reports/task-3/`.
+
+This prototype serves as a successful proof-of-concept and a valuable standalone tool.
+
+### Phase 2: Full-Stack Application (Flask + React)
+
+Following the project brief, a full-stack web application was developed with a clear separation between the backend data API and the frontend user interface.
+
+#### 1. Backend API (Flask)
+
+A RESTful API was built using Flask to serve all the necessary data for the dashboard.
+
+**Technology:** Flask, Flask-CORS, Pandas
+
+**Architecture:**
+- The Flask server (`app.py`) loads the processed data once on startup for efficiency.
+- It exposes two primary endpoints:
+  - `GET /api/prices`: Returns historical price data in JSON format. It accepts `start` and `end` query parameters to serve filtered data dynamically.
+  - `GET /api/events`: Returns a JSON list of the key geopolitical and economic events.
+- CORS is enabled to allow the React frontend (running on a different port) to access the API during development.
+
+**How to Run the Backend:**
+
+```bash
+# Make sure you are in the project's root directory
+# Activate the virtual environment
+source venv/bin/activate  # or .\venv\Scripts\Activate.ps1 on Windows
+
+# Run the Flask server
+python app.py
+```
+The API will be available at [http://127.0.0.1:5001](http://127.0.0.1:5001).
+
+#### 2. Frontend Interface (React)
+
+An interactive frontend was built using `create-react-app` to consume the data from the Flask API and present it to the user.
+
+**Technology:** React, Axios, Recharts
+
+**Architecture:**
+- The React application (`/dashboard` directory) is a standalone single-page application (SPA).
+- The `useEffect` hook is used to fetch price and event data from the Flask API using axios when the component mounts.
+- The Recharts library is used to render an interactive line chart based on the fetched data.
+- *(Future Work)* Controls like date sliders and multiselect boxes can be added to trigger new API calls and update the chart dynamically.
+
+**How to Run the Frontend:**
+
+```bash
+# Open a new terminal and navigate to the dashboard directory
+cd dashboard
+
+# Install dependencies (only need to do this once)
+npm install
+
+# Start the development server
+npm start
+```
+The dashboard will open in your browser at [http://localhost:3000](http://localhost:3000).
+
+---
